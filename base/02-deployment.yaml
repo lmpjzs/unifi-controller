@@ -15,6 +15,9 @@ spec:
         app: unifi-controller
     spec:
       containers:
+        # -------------------------
+        # UNIFI CONTROLLER
+        # -------------------------
         - name: unifi-controller
           image: lscr.io/linuxserver/unifi-network-application:latest
           ports:
@@ -25,9 +28,20 @@ spec:
             - name: stun
               containerPort: 3478
               protocol: UDP
+          env:
+            - name: MONGO_HOST
+              value: "localhost"
+            - name: MONGO_PORT
+              value: "27017"
+            - name: MONGO_DBNAME
+              value: "unifi"
+            - name: MONGO_USER
+              value: "unifi"
+            - name: MONGO_PASS
+              value: "unifi123"
           volumeMounts:
             - name: unifi-data
-              mountPath: /unifi/data
+              mountPath: /config
           resources:
             requests:
               cpu: 200m
@@ -39,15 +53,36 @@ spec:
             httpGet:
               path: /
               port: 8443
+              scheme: HTTPS
             initialDelaySeconds: 60
             periodSeconds: 30
           readinessProbe:
             httpGet:
               path: /
               port: 8443
+              scheme: HTTPS
             initialDelaySeconds: 60
             periodSeconds: 15
+
+        # -------------------------
+        # MONGODB SIDECAR
+        # -------------------------
+        - name: mongodb
+          image: mongo:4.4
+          args: ["--dbpath", "/data/db"]
+          env:
+            - name: MONGO_INITDB_ROOT_USERNAME
+              value: "unifi"
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              value: "unifi123"
+          volumeMounts:
+            - name: mongo-data
+              mountPath: /data/db
+
       volumes:
         - name: unifi-data
           persistentVolumeClaim:
             claimName: unifi-data
+        - name: mongo-data
+          persistentVolumeClaim:
+            claimName: mongo-data
