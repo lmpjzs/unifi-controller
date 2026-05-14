@@ -5,6 +5,7 @@ metadata:
   labels:
     app: unifi-controller
 spec:
+  type: ClusterIP
   selector:
     app: unifi-controller
   ports:
