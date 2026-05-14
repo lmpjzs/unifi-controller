@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: unifi-controller
-          image: jacobalberty/unifi:8.2.93
+          image: ubiquiti/unifi-network-application:8.2.93
           ports:
             - name: https
               containerPort: 8443
