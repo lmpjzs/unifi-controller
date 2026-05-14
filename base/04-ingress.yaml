@@ -4,6 +4,7 @@ metadata:
   name: unifi-controller
   annotations:
     nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
 spec:
   rules:
     - host: unifi.local
