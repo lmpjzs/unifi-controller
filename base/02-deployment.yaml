@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: unifi-controller
+  labels:
+    app: unifi-controller
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: unifi-controller
+  template:
+    metadata:
+      labels:
+        app: unifi-controller
+    spec:
+      containers:
+        - name: unifi-controller
+          image: jacobalberty/unifi:8.2.93
+          ports:
+            - name: https
+              containerPort: 8443
+            - name: inform
+              containerPort: 8080
+            - name: stun
+              containerPort: 3478
+              protocol: UDP
+          volumeMounts:
+            - name: unifi-data
+              mountPath: /unifi/data
+          resources:
+            requests:
+              cpu: 200m
+              memory: 512Mi
+            limits:
+              cpu: 1
+              memory: 2Gi
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8443
+            initialDelaySeconds: 60
+            periodSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8443
+            initialDelaySeconds: 60
+            periodSeconds: 15
+      volumes:
+        - name: unifi-data
+          persistentVolumeClaim:
+            claimName: unifi-data
