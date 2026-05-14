@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: unifi-controller
-          image: jacobalberty/unifi:stable
+          image: lscr.io/linuxserver/unifi-network-application:latest
           ports:
             - name: https
               containerPort: 8443
