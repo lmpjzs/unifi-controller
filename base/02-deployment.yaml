@@ -15,9 +15,6 @@ spec:
         app: unifi-controller
     spec:
       containers:
-        # -------------------------
-        # UNIFI CONTROLLER
-        # -------------------------
         - name: unifi-controller
           image: lscr.io/linuxserver/unifi-network-application:latest
           ports:
@@ -64,9 +61,6 @@ spec:
             initialDelaySeconds: 60
             periodSeconds: 15
 
-        # -------------------------
-        # MONGODB SIDECAR
-        # -------------------------
         - name: mongodb
           image: mongo:4.4
           args: ["--dbpath", "/data/db"]
