@@ -5,6 +5,8 @@ metadata:
   namespace: default
   labels:
     app: unifi-controller
+  annotations:
+    argocd.argoproj.io/tracking-id: unifi-controller:apps/Deployment:default/unifi-controller
 spec:
   replicas: 1
   strategy:

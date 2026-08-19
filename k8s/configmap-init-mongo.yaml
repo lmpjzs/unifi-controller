@@ -5,6 +5,8 @@ metadata:
   namespace: default
   labels:
     app: unifi-controller
+  annotations:
+    argocd.argoproj.io/tracking-id: unifi-controller:/ConfigMap:default/unifi-mongo-init
 data:
   init-mongo.sh: |
     #!/bin/bash

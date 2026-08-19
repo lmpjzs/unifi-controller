@@ -5,6 +5,8 @@ metadata:
   namespace: default
   labels:
     app: unifi-controller
+  annotations:
+    argocd.argoproj.io/tracking-id: unifi-controller:/PersistentVolumeClaim:default/unifi-config-pvc
 spec:
   accessModes:
     - ReadWriteOnce
@@ -20,6 +22,8 @@ metadata:
   namespace: default
   labels:
     app: unifi-controller
+  annotations:
+    argocd.argoproj.io/tracking-id: unifi-controller:/PersistentVolumeClaim:default/unifi-mongo-pvc
 spec:
   accessModes:
     - ReadWriteOnce

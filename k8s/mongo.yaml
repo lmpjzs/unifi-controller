@@ -5,6 +5,8 @@ metadata:
   namespace: default
   labels:
     app: unifi-mongo
+  annotations:
+    argocd.argoproj.io/tracking-id: unifi-controller:apps/Deployment:default/unifi-mongo
 spec:
   replicas: 1
   strategy:
@@ -72,6 +74,8 @@ metadata:
   namespace: default
   labels:
     app: unifi-mongo
+  annotations:
+    argocd.argoproj.io/tracking-id: unifi-controller:/Service:default/unifi-mongo
 spec:
   type: ClusterIP
   selector:
